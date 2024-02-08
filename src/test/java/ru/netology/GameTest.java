@@ -7,6 +7,7 @@ import ru.netology.exception.NotRegisteredException;
 import ru.netology.manager.Game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GameTest {
@@ -24,12 +25,12 @@ public class GameTest {
         game.register(player6);
         game.register(player5);
 
-        List<Player> expected = new ArrayList<>();
-        expected.add(player1);
-        expected.add(player6);
-        expected.add(player5);
+        HashMap<String, Player> expected = new HashMap<>();
+        expected.put(player1.getName(), player1);
+        expected.put(player6.getName(), player6);
+        expected.put(player5.getName(), player5);
 
-        List<Player> actual = game.getRegisteredPlayers();
+        HashMap<String, Player> actual = game.getRegisteredPlayers();
 
         Assertions.assertEquals(expected, actual);
     }
@@ -40,8 +41,8 @@ public class GameTest {
         game.register(player2);
         game.register(player3);
 
-        Assertions.assertThrows(NotRegisteredException.class, ()-> game.round(player1.getName(), player2.getName()));
-        Assertions.assertThrows(NotRegisteredException.class, ()-> game.round(player3.getName(), player4.getName()));
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.round(player1.getName(), player2.getName()));
+        Assertions.assertThrows(NotRegisteredException.class, () -> game.round(player3.getName(), player4.getName()));
     }
 
     @Test
@@ -50,10 +51,10 @@ public class GameTest {
         game.register(player2);
         game.register(player1);
 
-       int expected = 1;
-       int actual = game.round(player2.getName(), player1.getName());
+        int expected = 1;
+        int actual = game.round(player2.getName(), player1.getName());
 
-       Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -79,6 +80,4 @@ public class GameTest {
 
         Assertions.assertEquals(expected, actual);
     }
-
-
 }
